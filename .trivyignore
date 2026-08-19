@@ -1,10 +1,27 @@
 # Trivy ignore file for springboot-eks-api.
 #
-# Format: CVE-ID  # reason — expiry date if known
+# Format:
+#   AVD-ID  # reason — expiry date if known
 #
-# Add accepted findings here with a comment explaining the rationale.
-# Do NOT add findings you have not reviewed — this file is audited in the
-# licence compliance scan.
-#
-# Example (DO NOT UNCOMMENT without reviewing):
-# CVE-2023-12345  # false positive in base image; fix not yet released — review 2024-06-01
+# Add accepted findings here ONLY after reviewing them.
+# Each entry must carry a comment explaining the rationale.
+
+# ── EKS public API endpoint ───────────────────────────────────────────────────
+# The blueprint Tier 1 design uses a public EKS API endpoint with no NAT
+# gateway or VPN. This is intentional: CI runners need to reach the API server
+# to deploy workloads, and Tier 1 has no private networking.
+# Mitigation: the API server access is controlled by aws-auth / IAM; the
+# endpoint is not wide-open to arbitrary workloads.
+# Action: move to endpoint_public_access=false + private endpoint when adding
+# a NAT Gateway or AWS PrivateLink (Tier 2 enhancement).
+AVD-AWS-0040  # EKS public endpoint — Tier 1 design, no NAT gateway
+AVD-AWS-0041  # EKS public CIDR 0.0.0.0/0 — same rationale as AVD-AWS-0040
+
+# ── EKS logging ───────────────────────────────────────────────────────────────
+# Trivy requires all five log types; we enable audit/api/authenticator which
+# covers the security-relevant events. scheduler and controllerManager logs are
+# high-volume and add cost without improving the security posture for this
+# workload size.
+# Action: enable all five when moving to full audit compliance (Tier 2).
+AVD-AWS-0176  # EKS not all log types enabled — audit/api/authenticator are set
+AVD-AWS-0178  # EKS cluster logging — same rationale as AVD-AWS-0176
