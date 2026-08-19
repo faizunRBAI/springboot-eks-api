@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+<!--
+  Suppression rules for test classes and generated code.
+  Each suppression must carry a comment explaining why it is accepted.
+-->
+<suppressions>
+  <!--
+    Test classes: Javadoc and naming conventions are relaxed — test method names
+    are descriptive sentences (underscores allowed), and test class Javadoc adds
+    no value.
+  -->
+  <suppress files="src[\\/]test[\\/]" checks="JavadocType"/>
+  <suppress files="src[\\/]test[\\/]" checks="JavadocMethod"/>
+  <suppress files="src[\\/]test[\\/]" checks="MethodName"/>
+  <suppress files="src[\\/]test[\\/]" checks="FinalLocalVariable"/>
+</suppressions>

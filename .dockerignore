@@ -1,0 +1,13 @@
+.git
+.gitignore
+.gitattributes
+.github
+.udap
+target
+*.md
+*.env*
+infra
+k8s
+ansible
+config/checkstyle
+bin

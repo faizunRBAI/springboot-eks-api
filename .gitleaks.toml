@@ -1,0 +1,20 @@
+# Gitleaks configuration for springboot-eks-api.
+# Version 8 syntax.
+#
+# Add false-positive allowlist entries here with a comment explaining why
+# the finding is not a real secret.
+
+title = "springboot-eks-api gitleaks config"
+
+[extend]
+# Extend the default ruleset (ships with Gitleaks 8).
+useDefault = true
+
+[allowlist]
+description = "Known false positives"
+regexes = [
+  # The H2 test datasource uses an empty password — not a secret.
+  '''password:\s*""''',
+  # The application.yaml changeme placeholder is intentionally not a real secret.
+  '''changeme''',
+]

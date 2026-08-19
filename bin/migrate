@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+# bin/migrate — run Flyway migrations via the application's built-in Flyway.
+#
+# The Kubernetes configure stage calls this indirectly: it launches the
+# db-migrate-job.yaml Job, which starts the application with
+# --spring.profiles.active=migrate. That profile runs Flyway and exits cleanly.
+#
+# Local usage (requires a running PostgreSQL):
+#   SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/appdb \
+#   SPRING_DATASOURCE_USERNAME=appuser \
+#   SPRING_DATASOURCE_PASSWORD=secret \
+#   bin/migrate
+#
+set -euo pipefail
+
+JAR="$(find target -name '*.jar' -not -name '*-sources.jar' | head -1)"
+if [ -z "$JAR" ]; then
+  echo "No jar found under target/. Run: ./mvnw package -DskipTests" >&2
+  exit 1
+fi
+
+exec java \
+  -XX:+UseContainerSupport \
+  -XX:MaxRAMPercentage=75.0 \
+  -Djava.security.egd=file:/dev/./urandom \
+  -jar "$JAR" \
+  --spring.jpa.hibernate.ddl-auto=validate \
+  --spring.flyway.enabled=true \
+  --server.port=0

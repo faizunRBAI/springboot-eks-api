@@ -1,0 +1,10 @@
+# Trivy ignore file for springboot-eks-api.
+#
+# Format: CVE-ID  # reason — expiry date if known
+#
+# Add accepted findings here with a comment explaining the rationale.
+# Do NOT add findings you have not reviewed — this file is audited in the
+# licence compliance scan.
+#
+# Example (DO NOT UNCOMMENT without reviewing):
+# CVE-2023-12345  # false positive in base image; fix not yet released — review 2024-06-01
