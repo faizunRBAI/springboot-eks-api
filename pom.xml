@@ -97,7 +97,7 @@
         <version>3.4.0</version>
         <configuration>
           <configLocation>config/checkstyle/checkstyle.xml</configLocation>
-          <suppressionsLocation>config/checkstyle/suppressions.xml</suppressionsLocation>
+          <suppressionsLocation>${project.basedir}/config/checkstyle/suppressions.xml</suppressionsLocation>
           <consoleOutput>true</consoleOutput>
           <failsOnError>true</failsOnError>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
